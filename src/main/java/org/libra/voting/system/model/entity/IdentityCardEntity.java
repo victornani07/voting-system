@@ -1,11 +1,25 @@
 package org.libra.voting.system.model.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.libra.voting.system.model.enums.SexEnum;
 
 import java.time.LocalDate;
-import java.util.UUID;
+import java.util.Objects;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 
@@ -15,7 +29,7 @@ import static jakarta.persistence.GenerationType.SEQUENCE;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
+@SuperBuilder(toBuilder = true)
 @Table(
     name = "t_identity_card",
     uniqueConstraints = { @UniqueConstraint(columnNames = {"pnc"}) }
@@ -77,4 +91,42 @@ public class IdentityCardEntity {
     @Column(name = "residence_establishment_date")
     @ToString.Include
     private LocalDate residenceEstablishmentDate;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IdentityCardEntity that = (IdentityCardEntity) o;
+        return Objects.equals(id, that.id)
+            && Objects.equals(personalNumericCode, that.personalNumericCode)
+            && Objects.equals(firstName, that.firstName)
+            && Objects.equals(lastName, that.lastName)
+            && Objects.equals(birthDate, that.birthDate)
+            && Objects.equals(series, that.series)
+            && Objects.equals(dateOfIssue, that.dateOfIssue)
+            && Objects.equals(expirationDate, that.expirationDate)
+            && Objects.equals(issuingAuthority, that.issuingAuthority)
+            && sex == that.sex && Objects.equals(bloodGroup, that.bloodGroup)
+            && Objects.equals(residence, that.residence)
+            && Objects.equals(residenceEstablishmentDate, that.residenceEstablishmentDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+            id,
+            personalNumericCode,
+            firstName,
+            lastName,
+            birthDate,
+            series,
+            dateOfIssue,
+            expirationDate,
+            issuingAuthority,
+            sex,
+            bloodGroup,
+            residence,
+            residenceEstablishmentDate
+        );
+    }
 }
