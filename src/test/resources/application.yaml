@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: false
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/voting_system_test
+    username: postgres
+    password: victor
+    driver-class-name: org.postgresql.Driver
+  test:
+    database:
+      replace: none
